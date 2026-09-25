@@ -1,0 +1,7 @@
+{{- /*
+  plans.json 输出模板。
+  构建时把 data/plans.json 原样输出到 /plans.json，
+  供前端比价组件 fetch。这样资费数据只有一份来源。
+*/ -}}
+{{- $data := site.Data.plans -}}
+{{- $data | jsonify (dict "indent" "  ") -}}

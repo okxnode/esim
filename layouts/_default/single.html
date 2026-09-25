@@ -1,0 +1,87 @@
+{{- define "main" -}}
+<div class="wrap">
+
+  <header class="article-header">
+    <h1>{{ .Title }}</h1>
+    <p class="article-meta">
+      {{- with .Params.kind }}<span>{{ . }}</span>{{ end }}
+      <span>更新于 {{ (.Lastmod | default .Date).Format "2006-01-02" }}</span>
+      {{- if .Params.reading_time }}<span>约 {{ .Params.reading_time }} 分钟</span>{{ end }}
+    </p>
+  </header>
+
+  {{- /* 目录：长文才有 */}}
+  {{- if and .Params.toc (gt (len .TableOfContents) 100) }}
+    <nav class="toc" aria-label="目录">
+      <strong>本文目录</strong>
+      {{ .TableOfContents }}
+    </nav>
+  {{- end }}
+
+  {{- /* 低干扰、靠近推荐内容的合作链接说明 */}}
+  {{- if .Params.has_affiliate }}
+    <p class="disclosure-inline">{{ site.Params.affiliateDisclosure }} <a href="{{ "/methodology/" | relLangURL }}">了解排序方法</a></p>
+  {{- end }}
+
+  <article class="article-body">
+    {{ .Content }}
+  </article>
+
+  {{- /* 品牌评测页：正文读完后的购买入口 */}}
+  {{- if eq .Section "providers" }}
+    {{- $slug := .File.BaseFileName }}
+    {{- $brand := false }}
+    {{- range index site.Data.plans "brands" }}
+      {{- if eq .id $slug }}{{ $brand = . }}{{ end }}
+    {{- end }}
+    {{- with $brand }}
+    <section class="buy-box">
+      <div class="buy-box-text">
+        <h2>选购 {{ .name }}</h2>
+        <p>
+          {{ with .note }}{{ . }}。{{ end }}价格与套餐以官网结账页为准。
+        </p>
+        <p class="buy-box-meta">
+          价格参考见
+          <a href="{{ "/compare/" | relLangURL }}">比价工具</a>
+          ，数据更新于 {{ site.Params.dataUpdated }}。
+        </p>
+      </div>
+      <div class="buy-box-action">
+        <a class="cta-buy-lg"
+           href="{{ .buy_url }}"
+           rel="sponsored nofollow noopener"
+           target="_blank">查看 {{ .name }} 当前套餐 →</a>
+        {{- if not .affiliate_link_ready }}
+          <span class="buy-box-hint">联盟链接接入中，当前为官网地址</span>
+        {{- end }}
+      </div>
+    </section>
+    {{- end }}
+  {{- end }}
+
+  {{- /* 相关文章 */}}
+  {{- $related := where (site.RegularPages.Related .) "Section" "ne" "compare" }}
+  {{- with first 3 $related }}
+    <section class="block-home-section">
+      <h2>相关阅读</h2>
+      <div class="list-grid">
+        {{- range . }}
+          <div class="list-card">
+            <a href="{{ .RelPermalink }}">
+              <h3>{{ .Title }}</h3>
+              <p>{{ .Description | default (.Summary | plainify | truncate 80) }}</p>
+            </a>
+          </div>
+        {{- end }}
+      </div>
+    </section>
+  {{- end }}
+
+  <p class="article-updated">
+    本文最后更新于 {{ (.Lastmod | default .Date).Format "2006-01-02" }}。
+    资费与政策会变动，出行前建议到品牌官网再次确认。
+  </p>
+
+</div>
+{{- end -}}

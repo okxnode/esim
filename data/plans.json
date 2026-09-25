@@ -1,0 +1,474 @@
+{
+  "_comment": "eSIM 资费数据库。人工维护，不爬取。每次更新必须修改 _updated 字段。brands[].buy_url 是购买链接——申请联盟通过后用 scripts/set_affiliate.py 替换为带追踪参数的链接（脚本会自动把 affiliate_link_ready 置为 true，品牌页的『联盟链接接入中』提示随之消失）。详见 docs/联盟链接接入指南.md。",
+  "_updated": "2026-09-24",
+  "_currency": "USD",
+  "_note": "价格为官方标价（USD），实际支付可能因汇率与促销浮动。购买前请到品牌官网核实最新价格。",
+  "brands": [
+    {
+      "id": "airalo",
+      "name": "Airalo",
+      "affiliate": true,
+      "commission": "10%",
+      "cookie_days": 30,
+      "network": "Impact",
+      "trust": 5,
+      "note": "全球首个 eSIM 独角兽，2000 万用户，覆盖 200+ 目的地",
+      "review_url": "/providers/airalo/",
+      "buy_url": "https://www.airalo.com/",
+      "affiliate_link_ready": false
+    },
+    {
+      "id": "holafly",
+      "name": "Holafly",
+      "affiliate": true,
+      "commission": "10%",
+      "cookie_days": 365,
+      "network": "Impact / Awin",
+      "trust": 5,
+      "note": "主打无限流量，cookie 一年，长尾收益最佳",
+      "review_url": "/providers/holafly/",
+      "buy_url": "https://esim.holafly.com/",
+      "affiliate_link_ready": false
+    },
+    {
+      "id": "saily",
+      "name": "Saily",
+      "affiliate": true,
+      "commission": "15%",
+      "cookie_days": 30,
+      "network": "联盟平台",
+      "trust": 5,
+      "note": "Nord Security 旗下，品牌信任度高，有中文页",
+      "review_url": "/providers/saily/",
+      "buy_url": "https://saily.com/",
+      "affiliate_link_ready": false
+    },
+    {
+      "id": "nomad",
+      "name": "Nomad",
+      "affiliate": true,
+      "commission": "10-15%",
+      "cookie_days": 30,
+      "network": "联盟平台",
+      "trust": 4,
+      "note": "旅行圈知名度高，App 体验好",
+      "review_url": "/providers/nomad/",
+      "buy_url": "https://www.getnomad.app/",
+      "affiliate_link_ready": false
+    },
+    {
+      "id": "ubigi",
+      "name": "Ubigi",
+      "affiliate": true,
+      "commission": "10%",
+      "cookie_days": 60,
+      "network": "直营",
+      "trust": 4,
+      "note": "60 天 cookie，素材质量高，覆盖 200+ 地区",
+      "review_url": "/providers/ubigi/",
+      "buy_url": "https://www.transatel.com/ubigi/",
+      "affiliate_link_ready": false
+    },
+    {
+      "id": "gigago",
+      "name": "Gigago",
+      "affiliate": true,
+      "commission": "30%",
+      "cookie_days": 90,
+      "network": "直营",
+      "trust": 3,
+      "note": "佣金最高、cookie 最长，但品牌较新，下单前建议自行核实口碑",
+      "review_url": "/providers/gigago/",
+      "buy_url": "https://www.gigago.com/",
+      "affiliate_link_ready": false
+    }
+  ],
+  "plans": [
+    {
+      "brand": "saily",
+      "dest": "japan",
+      "dest_name": "日本",
+      "days": 5,
+      "gb": 3,
+      "price": 8.99,
+      "unlimited": false,
+      "hotspot": true,
+      "call": false,
+      "note": "性价比高，适合轻度使用"
+    },
+    {
+      "brand": "saily",
+      "dest": "japan",
+      "dest_name": "日本",
+      "days": 7,
+      "gb": 5,
+      "price": 12.99,
+      "unlimited": false,
+      "hotspot": true,
+      "call": false,
+      "note": ""
+    },
+    {
+      "brand": "airalo",
+      "dest": "japan",
+      "dest_name": "日本",
+      "days": 7,
+      "gb": 5,
+      "price": 11.5,
+      "unlimited": false,
+      "hotspot": true,
+      "call": false,
+      "note": "老牌，稳定性好"
+    },
+    {
+      "brand": "airalo",
+      "dest": "japan",
+      "dest_name": "日本",
+      "days": 15,
+      "gb": 10,
+      "price": 21.0,
+      "unlimited": false,
+      "hotspot": true,
+      "call": false,
+      "note": ""
+    },
+    {
+      "brand": "holafly",
+      "dest": "japan",
+      "dest_name": "日本",
+      "days": 7,
+      "gb": 0,
+      "price": 27.5,
+      "unlimited": true,
+      "hotspot": false,
+      "call": false,
+      "note": "无限流量，但不能共享热点"
+    },
+    {
+      "brand": "nomad",
+      "dest": "japan",
+      "dest_name": "日本",
+      "days": 7,
+      "gb": 5,
+      "price": 12.0,
+      "unlimited": false,
+      "hotspot": true,
+      "call": false,
+      "note": ""
+    },
+    {
+      "brand": "saily",
+      "dest": "thailand",
+      "dest_name": "泰国",
+      "days": 7,
+      "gb": 5,
+      "price": 9.99,
+      "unlimited": false,
+      "hotspot": true,
+      "call": false,
+      "note": ""
+    },
+    {
+      "brand": "airalo",
+      "dest": "thailand",
+      "dest_name": "泰国",
+      "days": 8,
+      "gb": 10,
+      "price": 14.0,
+      "unlimited": false,
+      "hotspot": true,
+      "call": false,
+      "note": ""
+    },
+    {
+      "brand": "holafly",
+      "dest": "thailand",
+      "dest_name": "泰国",
+      "days": 7,
+      "gb": 0,
+      "price": 24.5,
+      "unlimited": true,
+      "hotspot": false,
+      "call": false,
+      "note": ""
+    },
+    {
+      "brand": "saily",
+      "dest": "korea",
+      "dest_name": "韩国",
+      "days": 5,
+      "gb": 3,
+      "price": 7.99,
+      "unlimited": false,
+      "hotspot": true,
+      "call": false,
+      "note": ""
+    },
+    {
+      "brand": "airalo",
+      "dest": "korea",
+      "dest_name": "韩国",
+      "days": 7,
+      "gb": 5,
+      "price": 12.0,
+      "unlimited": false,
+      "hotspot": true,
+      "call": false,
+      "note": ""
+    },
+    {
+      "brand": "holafly",
+      "dest": "korea",
+      "dest_name": "韩国",
+      "days": 5,
+      "gb": 0,
+      "price": 22.9,
+      "unlimited": true,
+      "hotspot": false,
+      "call": false,
+      "note": ""
+    },
+    {
+      "brand": "saily",
+      "dest": "hongkong",
+      "dest_name": "中国香港",
+      "days": 5,
+      "gb": 3,
+      "price": 6.99,
+      "unlimited": false,
+      "hotspot": true,
+      "call": false,
+      "note": ""
+    },
+    {
+      "brand": "airalo",
+      "dest": "hongkong",
+      "dest_name": "中国香港",
+      "days": 7,
+      "gb": 5,
+      "price": 9.5,
+      "unlimited": false,
+      "hotspot": true,
+      "call": false,
+      "note": ""
+    },
+    {
+      "brand": "saily",
+      "dest": "macau",
+      "dest_name": "中国澳门",
+      "days": 5,
+      "gb": 3,
+      "price": 6.99,
+      "unlimited": false,
+      "hotspot": true,
+      "call": false,
+      "note": ""
+    },
+    {
+      "brand": "airalo",
+      "dest": "macau",
+      "dest_name": "中国澳门",
+      "days": 7,
+      "gb": 5,
+      "price": 9.0,
+      "unlimited": false,
+      "hotspot": true,
+      "call": false,
+      "note": ""
+    },
+    {
+      "brand": "saily",
+      "dest": "taiwan",
+      "dest_name": "中国台湾",
+      "days": 5,
+      "gb": 3,
+      "price": 7.49,
+      "unlimited": false,
+      "hotspot": true,
+      "call": false,
+      "note": ""
+    },
+    {
+      "brand": "airalo",
+      "dest": "taiwan",
+      "dest_name": "中国台湾",
+      "days": 7,
+      "gb": 5,
+      "price": 10.5,
+      "unlimited": false,
+      "hotspot": true,
+      "call": false,
+      "note": ""
+    },
+    {
+      "brand": "saily",
+      "dest": "singapore",
+      "dest_name": "新加坡",
+      "days": 5,
+      "gb": 3,
+      "price": 7.99,
+      "unlimited": false,
+      "hotspot": true,
+      "call": false,
+      "note": ""
+    },
+    {
+      "brand": "saily",
+      "dest": "usa",
+      "dest_name": "美国",
+      "days": 7,
+      "gb": 5,
+      "price": 13.99,
+      "unlimited": false,
+      "hotspot": true,
+      "call": false,
+      "note": ""
+    },
+    {
+      "brand": "airalo",
+      "dest": "usa",
+      "dest_name": "美国",
+      "days": 15,
+      "gb": 10,
+      "price": 26.0,
+      "unlimited": false,
+      "hotspot": true,
+      "call": false,
+      "note": ""
+    },
+    {
+      "brand": "holafly",
+      "dest": "usa",
+      "dest_name": "美国",
+      "days": 7,
+      "gb": 0,
+      "price": 29.5,
+      "unlimited": true,
+      "hotspot": false,
+      "call": false,
+      "note": ""
+    },
+    {
+      "brand": "saily",
+      "dest": "europe",
+      "dest_name": "欧洲多国",
+      "days": 10,
+      "gb": 5,
+      "price": 15.99,
+      "unlimited": false,
+      "hotspot": true,
+      "call": false,
+      "note": "覆盖 30+ 欧洲国家"
+    },
+    {
+      "brand": "airalo",
+      "dest": "europe",
+      "dest_name": "欧洲多国",
+      "days": 15,
+      "gb": 10,
+      "price": 26.0,
+      "unlimited": false,
+      "hotspot": true,
+      "call": false,
+      "note": ""
+    },
+    {
+      "brand": "holafly",
+      "dest": "europe",
+      "dest_name": "欧洲多国",
+      "days": 10,
+      "gb": 0,
+      "price": 34.5,
+      "unlimited": true,
+      "hotspot": false,
+      "call": false,
+      "note": ""
+    },
+    {
+      "brand": "saily",
+      "dest": "global",
+      "dest_name": "全球通用",
+      "days": 30,
+      "gb": 10,
+      "price": 34.99,
+      "unlimited": false,
+      "hotspot": true,
+      "call": false,
+      "note": "覆盖 100+ 国家，适合多国行程"
+    },
+    {
+      "brand": "airalo",
+      "dest": "global",
+      "dest_name": "全球通用",
+      "days": 30,
+      "gb": 20,
+      "price": 62.0,
+      "unlimited": false,
+      "hotspot": true,
+      "call": false,
+      "note": ""
+    }
+  ],
+  "destinations": [
+    {
+      "id": "japan",
+      "name": "日本",
+      "region": "东亚",
+      "order": 1
+    },
+    {
+      "id": "thailand",
+      "name": "泰国",
+      "region": "东南亚",
+      "order": 2
+    },
+    {
+      "id": "korea",
+      "name": "韩国",
+      "region": "东亚",
+      "order": 3
+    },
+    {
+      "id": "hongkong",
+      "name": "中国香港",
+      "region": "中国",
+      "order": 4
+    },
+    {
+      "id": "macau",
+      "name": "中国澳门",
+      "region": "中国",
+      "order": 5
+    },
+    {
+      "id": "taiwan",
+      "name": "中国台湾",
+      "region": "中国",
+      "order": 6
+    },
+    {
+      "id": "singapore",
+      "name": "新加坡",
+      "region": "东南亚",
+      "order": 7
+    },
+    {
+      "id": "usa",
+      "name": "美国",
+      "region": "北美",
+      "order": 8
+    },
+    {
+      "id": "europe",
+      "name": "欧洲多国",
+      "region": "欧洲",
+      "order": 9
+    },
+    {
+      "id": "global",
+      "name": "全球通用",
+      "region": "全球",
+      "order": 10
+    }
+  ]
+}

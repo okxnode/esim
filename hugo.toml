@@ -1,0 +1,120 @@
+# esim.ltd 站点配置
+# 文档: https://gohugo.io/getting-started/configuration/
+
+baseURL = "https://esim.ltd/"
+languageCode = "zh-cn"
+defaultContentLanguage = "zh"
+title = "eSIM.ltd｜出境上网决策指南"
+
+# 默认时区
+timeZone = "Asia/Shanghai"
+
+# 生成更规范的 URL
+disableKinds = ["taxonomy", "term"]
+
+# 构建优化
+enableRobotsTXT = true
+enableGitInfo = false
+
+# 分页
+[pagination]
+  pagerSize = 20
+
+# 输出格式：home 额外输出 PlansJSON，生成 /plans.json 供比价组件使用
+[outputs]
+  home = ["HTML", "RSS", "PlansJSON"]
+
+[params]
+  description = "面向中文旅行者的 eSIM 套餐比较与实用指南：按目的地、天数、流量和热点需求筛选，价格与规则均标注核验日期。"
+  author = "esim.ltd"
+
+  # ---------------------------------------------------------------
+  # 合规：联盟佣金披露（必须存在，见规划书 7.1）
+  # ---------------------------------------------------------------
+  affiliateDisclosure = "部分购买链接为合作链接；通过链接购买，我们可能获得佣金，你的价格不变，佣金不参与套餐排序。"
+
+  # 数据最后更新日期，显示在页脚
+  dataUpdated = "2026-09-24"
+
+  # 分析（Cloudflare Web Analytics，无需 cookie，不拖慢首屏）
+  # 部署后到 Cloudflare 后台获取 token 填入
+  cfAnalyticsToken = ""
+
+  # 备案/合规声明
+  disclaimer = "本站为独立评测站点，与任何 eSIM 品牌无隶属关系。"
+
+# ---------------------------------------------------------------
+# 导航菜单
+# ---------------------------------------------------------------
+[menu]
+  [[menu.main]]
+    name = "套餐比价"
+    url = "/compare/"
+    weight = 10
+  [[menu.main]]
+    name = "目的地"
+    url = "/destinations/"
+    weight = 20
+  [[menu.main]]
+    name = "品牌评测"
+    url = "/providers/"
+    weight = 30
+  [[menu.main]]
+    name = "教程"
+    url = "/guide/"
+    weight = 40
+  [[menu.main]]
+    name = "怎么评测"
+    url = "/methodology/"
+    weight = 50
+
+# ---------------------------------------------------------------
+# 多语言（规划书 9.1：中文优先，英文后置）
+# ---------------------------------------------------------------
+[languages]
+  [languages.zh]
+    languageName = "中文"
+    weight = 1
+    contentDir = "content"
+    title = "eSIM 选型指南"
+  # 英文版启用时取消注释，并把英文内容放到 content/en/
+  # [languages.en]
+  #   languageName = "English"
+  #   weight = 2
+  #   contentDir = "content/en"
+  #   title = "eSIM Guide"
+
+# ---------------------------------------------------------------
+# 输出格式定义
+# ---------------------------------------------------------------
+[outputFormats]
+  [outputFormats.PlansJSON]
+    mediaType = "application/json"
+    baseName = "plans"
+    isPlainText = true
+    notAlternative = true
+
+# ---------------------------------------------------------------
+# Markdown 渲染（Hugo 0.60+ 用 goldmark）
+# ---------------------------------------------------------------
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      # 允许 Markdown 里写原生 HTML（比价表需要）
+      unsafe = true
+    [markup.goldmark.parser]
+      autoHeadingID = true
+  [markup.highlight]
+    style = "github"
+    noClasses = false
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 3
+    ordered = false
+
+# ---------------------------------------------------------------
+# 安全（防止 Markdown 中注入危险 HTML）
+# ---------------------------------------------------------------
+[security]
+  [security.funcs]
+    getenv = ["^HUGO_"]

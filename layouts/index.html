@@ -1,0 +1,27 @@
+{{- define "main" -}}
+<section class="home-hero"><div class="wrap-wide hero-grid">
+  <div class="hero-copy"><p class="eyebrow">独立 · 中文 · 按需求比较</p><h1>出国上网，<br><span>先把套餐比明白。</span></h1><p class="lede">输入目的地、天数和流量需求，比较主流 eSIM 的价格与关键限制。没有万能冠军，只有更适合这趟行程的选择。</p><div class="trust-row"><span>✓ 标注核价日期</span><span>✓ 佣金不参与排序</span><span>✓ 明确写出限制</span></div></div>
+  <div class="search-card" id="compare-app" data-quick="1">
+    <div class="search-card-head"><span class="step-badge">快速比价</span><span>约 30 秒</span></div>
+    <div class="compare-form compare-form-home">
+      <div class="field field-wide"><label for="f-dest">你要去哪里？</label><select id="f-dest"><option value="all">选择目的地</option></select></div>
+      <div class="field"><label for="f-days">旅行天数</label><div class="input-suffix"><input type="number" id="f-days" min="1" max="90" value="7"><span>天</span></div></div>
+      <div class="field"><label for="f-gb">预计流量</label><div class="input-suffix"><input type="number" id="f-gb" min="0" max="100" value="5"><span>GB</span></div></div>
+      <div class="field field-check"><input type="checkbox" id="f-unlimited" checked><label for="f-unlimited">接受无限流量</label></div>
+      <div class="field field-check"><input type="checkbox" id="f-hotspot"><label for="f-hotspot">必须支持热点</label></div>
+      <div class="field-hidden"><select id="f-sort"><option value="value">按性价比</option></select></div>
+    </div>
+    <a class="primary-button" href="/compare/" id="home-compare-link">查看符合条件的套餐 <span>→</span></a><p class="microcopy">套餐数据更新于 {{ site.Params.dataUpdated }} · 购买前请以官网为准</p>
+  </div>
+</div></section>
+<main class="wrap-wide home-main">
+  <section class="proof-strip"><div><strong>{{ len (index site.Data.plans "brands") }}</strong><span>个主流品牌</span></div><div><strong>{{ len (index site.Data.plans "plans") }}</strong><span>个已核验套餐</span></div><div><strong>{{ len (index site.Data.plans "destinations") }}</strong><span>个热门目的地</span></div><div><strong>{{ site.Params.dataUpdated }}</strong><span>最近核验</span></div></section>
+  <section class="home-section"><div class="section-heading"><div><p class="eyebrow">热门目的地</p><h2>从你的下一站开始</h2></div><a href="/destinations/">查看全部目的地 →</a></div><div class="destination-showcase">{{- $icons := dict "japan" "富士" "korea" "首尔" "thailand" "曼谷" "singapore" "新加坡" "usa" "美国" "europe" "欧洲" "hongkong" "香港" "taiwan" "台湾" -}}{{- range first 8 (index site.Data.plans "destinations") }}<a class="destination-tile" href="{{ printf "/destinations/%s/" .id | relLangURL }}"><span class="tile-art tile-{{ .id }}">{{ index $icons .id | default .name }}</span><span class="tile-copy"><strong>{{ .name }}</strong><small>{{ .region }} · 查看套餐</small></span><span class="tile-arrow">↗</span></a>{{- end }}</div></section>
+  <section class="home-section how-section"><div class="section-heading centered"><div><p class="eyebrow">简单，但不草率</p><h2>三步选到更合适的套餐</h2></div></div><div class="steps-grid"><article><span>01</span><h3>告诉我们行程</h3><p>目的地、停留天数、所需流量，以及是否需要热点。</p></article><article><span>02</span><h3>比较关键差异</h3><p>不只看总价，也比较每 GB 价格、有效期与使用限制。</p></article><article><span>03</span><h3>到官网完成购买</h3><p>我们不经手付款。下单前在品牌官网确认最终价格和条款。</p></article></div></section>
+  <section class="home-section editorial-banner"><div><p class="eyebrow">为什么可以参考我们</p><h2>推荐依据公开，商业关系不藏着。</h2></div><div><p>本站按价格、套餐匹配度、热点支持和品牌可靠性整理信息。联盟佣金不进入排序；无法核实的体验，不写成事实。</p><a href="/methodology/">查看完整评测方法 →</a></div></section>
+  <section class="home-section"><div class="section-heading"><div><p class="eyebrow">实用指南</p><h2>买之前，先避开常见坑</h2></div><a href="/guide/">查看全部教程 →</a></div><div class="guide-grid">{{- range first 3 (where site.RegularPages.ByLastmod.Reverse "Section" "guide") }}<a class="guide-card" href="{{ .RelPermalink }}"><span>指南</span><h3>{{ .Title }}</h3><p>{{ .Description | default (.Summary | plainify | truncate 92) }}</p><b>阅读指南 →</b></a>{{- end }}</div></section>
+  <p class="disclosure-inline home-disclosure">{{ site.Params.affiliateDisclosure }} <a href="/methodology/">我们如何保持独立</a></p>
+</main>
+{{- $js := resources.Get "js/compare.js" }}{{- with $js }}{{- $js = . | minify | fingerprint }}<script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>{{- end }}
+<script>document.addEventListener('DOMContentLoaded',function(){var a=document.getElementById('home-compare-link');if(!a)return;a.addEventListener('click',function(e){var d=document.getElementById('f-dest').value,n=document.getElementById('f-days').value,g=document.getElementById('f-gb').value,u=document.getElementById('f-unlimited').checked,h=document.getElementById('f-hotspot').checked,q='?dest='+encodeURIComponent(d)+'&days='+n+'&gb='+g+(u?'':'&nounlimited=1')+(h?'&hotspot=1':'');e.preventDefault();location.href='/compare/'+q;});});</script>
+{{- end -}}

@@ -1,0 +1,57 @@
+{{- /*
+  列表页模板。所有 section（destinations / providers / guide / compare）共用。
+  顶部显示栏目简介，下面按卡片网格罗列。
+*/ -}}
+{{- define "main" -}}
+<div class="wrap">
+
+  <header class="article-header">
+    <h1>{{ .Title }}</h1>
+    {{- with .Content }}
+      <div style="margin-top:0.75rem; color:var(--c-text-soft)">{{ . }}</div>
+    {{- end }}
+  </header>
+
+  {{- $pages := .Pages }}
+  {{- if $pages }}
+
+    {{- /* 按区域/类型分组展示，更符合内容站的信息架构 */}}
+    {{- if eq .Section "destinations" }}
+      {{- range $region := (slice "中国" "东亚" "东南亚" "北美" "欧洲" "全球") }}
+        {{- $group := where $pages "Params.region" $region }}
+        {{- with $group }}
+          <section class="block-home-section">
+            <h2>{{ $region }}</h2>
+            <div class="list-grid">
+              {{- range . }}
+                <div class="list-card">
+                  <a href="{{ .RelPermalink }}">
+                    <h3>{{ .Title }}</h3>
+                    <p>{{ .Description | default (.Summary | plainify | truncate 70) }}</p>
+                  </a>
+                </div>
+              {{- end }}
+            </div>
+          </section>
+        {{- end }}
+      {{- end }}
+
+    {{- else }}
+      <div class="list-grid" style="margin-top:1.5rem">
+        {{- range $pages.ByLastmod.Reverse }}
+          <div class="list-card">
+            <a href="{{ .RelPermalink }}">
+              <h3>{{ .Title }}</h3>
+              <p>{{ .Description | default (.Summary | plainify | truncate 70) }}</p>
+            </a>
+          </div>
+        {{- end }}
+      </div>
+    {{- end }}
+
+  {{- else }}
+    <p class="muted" style="margin:2rem 0">这个栏目还在建设中。</p>
+  {{- end }}
+
+</div>
+{{- end -}}

@@ -1,0 +1,9 @@
+{{- /* robots.txt — 允许收录，但屏蔽比价页的筛选参数 */ -}}
+User-agent: *
+Allow: /
+
+{{- /* 屏蔽带参数的比价 URL，避免重复内容 */}}
+Disallow: /compare?*
+Disallow: /*?dest=
+
+Sitemap: {{ "sitemap.xml" | absURL }}

@@ -1,0 +1,83 @@
+{{- /*
+  baseof.html — 全站骨架。
+  所有页面模板继承此文件，只需定义 main 区块。
+*/ -}}
+<!DOCTYPE html>
+<html lang="{{ site.Language.LanguageCode | default "zh-cn" }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{{- if .IsHome }}
+<meta name="impact-site-verification" value="dbd113a3-1819-4cdc-9922-a8a20882094e">
+{{- end }}
+
+{{- /* ---------------------------------------------------- SEO */}}
+<title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} · {{ site.Title }}{{ end }}</title>
+
+{{- $desc := .Description | default site.Params.description }}
+<meta name="description" content="{{ $desc }}">
+
+{{- /* 规范链接：比价页带参数，需指向干净 URL 避免重复收录 */}}
+<link rel="canonical" href="{{ .Permalink }}">
+
+{{- /* Open Graph */}}
+<meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+<meta property="og:title" content="{{ .Title }}">
+<meta property="og:description" content="{{ $desc }}">
+<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:site_name" content="{{ site.Title }}">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#0b2239">
+
+{{- /* 阻止比价页的筛选参数被收录 */}}
+{{ if eq .Section "compare" }}<meta name="robots" content="index,follow">{{ end }}
+
+{{- /* ---------------------------------------------------- 样式 */}}
+{{- $css := resources.Get "css/main.css" }}
+{{- if $css }}
+  {{- $css = $css | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
+{{- else }}
+  <link rel="stylesheet" href="/css/main.css">
+{{- end }}
+
+{{- /* ---------------------------------------------------- RSS */}}
+{{ with .OutputFormats.Get "rss" }}
+  <link rel="alternate" type="application/rss+xml" href="{{ .Permalink }}" title="{{ site.Title }}">
+{{ end }}
+
+{{- /* ---------------------------------------------------- 结构化数据 */}}
+{{ if .IsPage }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": {{ .Title | jsonify }},
+  "description": {{ $desc | jsonify }},
+  "datePublished": {{ .Date.Format "2006-01-02" | jsonify }},
+  "dateModified": {{ (.Lastmod | default .Date).Format "2006-01-02" | jsonify }},
+  "inLanguage": "zh-CN",
+  "author": {"@type":"Organization","name":"eSIM.ltd 编辑部","url":"{{ "/about/" | absURL }}"},
+  "publisher": {"@type":"Organization","name":"eSIM.ltd","url":"{{ "/" | absURL }}"}
+}
+</script>
+{{ end }}
+
+{{- /* ---------------------------------------------------- 分析（可选） */}}
+{{ with site.Params.cfAnalyticsToken }}
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js"
+  data-cf-beacon='{"token": "{{ . }}"}'></script>
+{{ end }}
+</head>
+<body>
+
+{{ partial "header.html" . }}
+
+<main id="main">
+{{ block "main" . }}{{ end }}
+</main>
+
+{{ partial "footer.html" . }}
+
+</body>
+</html>

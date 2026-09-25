@@ -1,0 +1,122 @@
+{{- /*
+  目的地单页模板。
+  比通用 single 多一块：把该目的地的比价表直接嵌进来，
+  同时注入页面级预设（用户不必再选国家）。
+*/ -}}
+{{- define "main" -}}
+{{- $destId := .File.BaseFileName -}}
+{{- $destMeta := dict }}
+{{- range (index site.Data.plans "destinations") }}
+  {{- if eq .id $destId }}{{ $destMeta = . }}{{ end }}
+{{- end }}
+
+<div class="wrap">
+
+  <header class="article-header">
+    <h1>{{ .Title }}</h1>
+    <p class="article-meta">
+      {{- with $destMeta.region }}<span>{{ . }}</span>{{ end }}
+      <span>更新于 {{ (.Lastmod | default .Date).Format "2006-01-02" }}</span>
+    </p>
+  </header>
+
+  <p class="disclosure-inline">{{ site.Params.affiliateDisclosure }} <a href="{{ "/methodology/" | relLangURL }}">了解排序方法</a></p>
+
+  <article class="article-body">
+    {{ .Content }}
+  </article>
+
+  <section class="block-home-section" id="plans">
+    <h2>{{ .Title }} eSIM 比价</h2>
+    <p style="color:var(--c-text-soft); font-size:0.9375rem; margin-bottom:1rem">
+      已按该目的地筛选。调整天数和流量可以进一步收窄结果。
+    </p>
+
+    <div id="compare-app" data-dest="{{ $destId }}">
+      <div class="compare-panel">
+        <div class="compare-form">
+          <div class="field">
+            <label for="f-days">天数</label>
+            <input type="number" id="f-days" min="1" max="90" value="7">
+          </div>
+          <div class="field">
+            <label for="f-gb">需要流量 (GB)</label>
+            <input type="number" id="f-gb" min="0" max="100" value="5">
+          </div>
+          <div class="field field-check">
+            <input type="checkbox" id="f-unlimited" checked>
+            <label for="f-unlimited">接受无限流量</label>
+          </div>
+          <div class="field field-check">
+            <input type="checkbox" id="f-hotspot">
+            <label for="f-hotspot">必须支持热点</label>
+          </div>
+          <div class="field">
+            <label for="f-sort">排序</label>
+            <select id="f-sort">
+              <option value="value">按性价比</option>
+              <option value="price">按总价</option>
+              <option value="brand">按品牌</option>
+            </select>
+          </div>
+          <div class="field">
+            <button class="btn-reset" id="f-reset" type="button">重置</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="compare-stats" id="compare-stats"></div>
+      <div class="compare-conclusion" id="compare-conclusion">
+        <p class="muted">正在加载资费数据…</p>
+      </div>
+
+      <div class="compare-table-wrap">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th>品牌</th>
+              <th>流量</th>
+              <th>时长</th>
+              <th>价格</th>
+              <th>每 GB</th>
+              <th>热点</th>
+              <th>购买</th>
+            </tr>
+          </thead>
+          <tbody id="compare-tbody"></tbody>
+        </table>
+      </div>
+
+      <p class="compare-updated" id="compare-updated"></p>
+    </div>
+  </section>
+
+  <section class="block-home-section">
+    <h2>其他国家与地区</h2>
+    <div class="dest-grid">
+      {{- range (index site.Data.plans "destinations") }}
+        {{- if ne .id $destId }}
+          <a class="dest-card" href="{{ printf "/destinations/%s/" .id | relLangURL }}">
+            <span class="name">{{ .name }}</span>
+            <span class="meta">{{ .region }}</span>
+          </a>
+        {{- end }}
+      {{- end }}
+    </div>
+  </section>
+
+  <p class="article-updated">
+    本页资费更新于 {{ (.Lastmod | default .Date).Format "2006-01-02" }}。
+    价格会变动，下单前请到品牌官网确认。
+  </p>
+
+</div>
+
+{{- $js := resources.Get "js/compare.js" }}
+{{- with $js }}
+  {{- $js = . | minify | fingerprint }}
+  <script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>
+{{ else }}
+  <script src="/js/compare.js" defer></script>
+{{ end }}
+{{- end -}}

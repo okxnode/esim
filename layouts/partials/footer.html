@@ -1,0 +1,36 @@
+{{- /* footer.html — 页脚，含强制性的合规披露 */ -}}
+<footer class="site-footer">
+  <div class="wrap-wide">
+
+    <div class="footer-grid">
+      <div>
+        <a class="footer-brand" href="{{ "/" | relLangURL }}">eSIM.ltd</a>
+        <p>帮中文旅行者看懂套餐规则，少花冤枉钱。</p>
+        <p>{{ site.Params.disclaimer }}</p>
+      </div>
+      <div>
+        <strong>选择套餐</strong>
+        <a href="{{ "/compare/" | relLangURL }}">套餐比价</a>
+        <a href="{{ "/destinations/" | relLangURL }}">目的地指南</a>
+        <a href="{{ "/providers/" | relLangURL }}">品牌评测</a>
+      </div>
+      <div>
+        <strong>关于我们</strong>
+        <a href="{{ "/methodology/" | relLangURL }}">评测与排序方法</a>
+        <a href="{{ "/editorial-policy/" | relLangURL }}">编辑政策</a>
+        <a href="{{ "/privacy/" | relLangURL }}">隐私政策</a>
+        <a href="{{ "/about/" | relLangURL }}">关于本站</a>
+      </div>
+    </div>
+
+    <div class="footer-meta">
+      <p>
+        资费数据更新于 {{ site.Params.dataUpdated }}。价格为官方标价，
+        实际支付可能因汇率与促销浮动，购买前请到品牌官网核实。
+      </p>
+      <p class="affiliate-note">{{ site.Params.affiliateDisclosure }}</p>
+      <p>© {{ now.Year }} eSIM.ltd</p>
+    </div>
+
+  </div>
+</footer>
